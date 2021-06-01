@@ -1,10 +1,13 @@
 #84x48 bitmap to bytearray, suitable for Nokia 5510 LCD display horizontal addressing.
 #Script by Kyuchumimo. Available to the entire Open Source community
+#!/usr/bin/env python3
+# usage: python3 thisfile.py infile.png/jpeg/jpg/bmp
 
 from PIL import Image
 import sys
 
-im = Image.open('nokia5510.png') # Can be many different formats. Must be a 1-bit b/w 84x48 image
+im = Image.open(sys.argv[1])  # Can be many different formats. Must be a 1-bit b/w 84x48 image
+
 pix = im.load()
 print(im.size)  # Get the width and hight of the image for iterating over
 
