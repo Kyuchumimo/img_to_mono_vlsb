@@ -11,23 +11,25 @@ im = Image.open(sys.argv[1])  # Can be many different formats. Must be a 1-bit b
 pix = im.load()
 print(im.size)  # Get the width and hight of the image for iterating over
 
-if im.size != (84, 48):
-    print("Must be a 84x48 image!")
-    sys.exit()
-
 a = ""
 
-for i in range(0,6):
+for i in range(0,(im.size[1]-1)//8+1):
     for j in range(0,im.size[0]):
-        for k in range(7,-1,-1):
-            if pix[j,k+(8*i)] == (255,255,255):
+        for k in range(7, -1, -1):
+            try:
+                if pix[j,k+(8*i)] == (255, 255, 255):
+                    a = a + "0"
+                if pix[j,k+(8*i)] == (0, 0, 0):
+                    a = a + "1"
+                if pix[j,k+(8*i)] not in [(0, 0, 0), (255, 255, 255)]:
+                    print("invalid color request: {} at {} pos".format(pix[j,k+(8*i)], [j,k+(8*i)]))
+                    sys.exit()
+            except IndexError:
                 a = a + "0"
-            if pix[j,k+(8*i)] == (0,0,0):
-                a = a + "1"
 
-print("b'",end='')
-for i in range(0,504):
+print("bytearray(b'",end='')
+for i in range(0,(im.size[0]*(((im.size[1]-1)//8+1)*8))//8):
     print("\\",end='')
     print("x",end='')
     print(f'{int(a[0+(8*i):8+(8*i)], 2):02x}',end="")
-print("'",end='')
+print("')",end='')
