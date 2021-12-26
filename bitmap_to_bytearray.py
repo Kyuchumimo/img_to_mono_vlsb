@@ -6,7 +6,7 @@
 from PIL import Image
 import sys
 
-im = Image.open(sys.argv[1])  # Can be many different formats. Must be a 1-bit b/w 84x48 image
+im = Image.open(sys.argv[1])  # Can be many different formats. Must be a 1-bit b/w image
 
 pix = im.load()
 print(im.size)  # Get the width and hight of the image for iterating over
