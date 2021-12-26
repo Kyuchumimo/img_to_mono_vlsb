@@ -1,5 +1,5 @@
 #Multidimensional bitmap to bytearray (horizontal addressing) Python script, suitable for Nokia 5110 PCD8544 84x48 LCD and SSD1306 128x64 OLED displays. 
-#Script by Kyuchumimo. Available to the entire Open Source community
+#Script by Kyuchumimo. Available to the Open Source community
 #!/usr/bin/env python3
 # usage: python3 thisfile.py infile.png/jpeg/jpg/bmp
 
