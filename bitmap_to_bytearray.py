@@ -4,7 +4,7 @@
 # usage: python3 thisfile.py infile.png/jpeg/jpg/bmp
 
 from PIL import Image
-import sys
+import os, sys
 
 im = Image.open(sys.argv[1])  # Can be many different formats. Must be a 1-bit b/w image
 
@@ -27,9 +27,10 @@ for i in range((im.size[1]-1)//8+1):
             except IndexError:
                 a = a + "0"
 
-print("bytearray(b'",end='')
+os.system('clear')
+print("framebuf.FrameBuffer(bytearray(b'",end='')
 for i in range((im.size[0]*(((im.size[1]-1)//8+1)*8))//8):
     print("\\",end='')
     print("x",end='')
     print(f'{int(a[0+(8*i):8+(8*i)], 2):02x}',end="")
-print("')")
+print("'), {}, {}, framebuf.MONO_VLSB)".format(im.size[0]), im.size[1]))
