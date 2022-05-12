@@ -13,8 +13,8 @@ print(im.size)  # Get the width and hight of the image for iterating over
 
 a = ""
 
-for i in range(0,(im.size[1]-1)//8+1):
-    for j in range(0,im.size[0]):
+for i in range((im.size[1]-1)//8+1):
+    for j in range(im.size[0]):
         for k in range(7, -1, -1):
             try:
                 if pix[j,k+(8*i)] == (255, 255, 255):
