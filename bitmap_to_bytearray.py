@@ -33,4 +33,4 @@ for i in range((im.size[0]*(((im.size[1]-1)//8+1)*8))//8):
     print("\\",end='')
     print("x",end='')
     print(f'{int(a[0+(8*i):8+(8*i)], 2):02x}',end="")
-print("'), {}, {}, framebuf.MONO_VLSB)".format(im.size[0]), im.size[1]))
+print("'), {}, {}, framebuf.MONO_VLSB)".format(im.size[0], im.size[1]))
