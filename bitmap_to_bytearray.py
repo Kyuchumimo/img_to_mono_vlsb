@@ -6,31 +6,32 @@
 from PIL import Image
 import os, sys
 
-im = Image.open(sys.argv[1])  # Can be many different formats. Must be a 1-bit b/w image
+im = Image.open(sys.argv[1])  # Can be many different formats.
+im = im.crop((0,0,min(im.size[0], 84), min(im.size[1], 48))).convert("1").convert("RGB")
 
-pix = im.load()
 print(im.size)  # Get the width and hight of the image for iterating over
 
-a = ""
-
+data = bytearray((im.size[0]*(((im.size[1]-1)//8+1)*8))//8)
 for i in range((im.size[1]-1)//8+1):
     for j in range(im.size[0]):
         for k in range(7, -1, -1):
             try:
-                if pix[j,k+(8*i)] == (255, 255, 255):
-                    a = a + "0"
-                elif pix[j,k+(8*i)] == (0, 0, 0):
-                    a = a + "1"
-                else:
-                    print("invalid color request: {} at {} pos".format(pix[j,k+(8*i)], [j,k+(8*i)]))
-                    sys.exit()
+                if im.getpixel([j,k+(8*i)]) == (0, 0, 0):
+                    data[j+(i*im.size[0])] |= 1 << k
             except IndexError:
-                a = a + "0"
+                pass
 
-os.system('clear')
-print("framebuf.FrameBuffer(bytearray(b'",end='')
-for i in range((im.size[0]*(((im.size[1]-1)//8+1)*8))//8):
-    print("\\",end='')
-    print("x",end='')
-    print(f'{int(a[0+(8*i):8+(8*i)], 2):02x}',end="")
-print("'), {}, {}, framebuf.MONO_VLSB)".format(im.size[0], im.size[1]))
+if os.name == 'nt':
+    os.system('cls')
+else:
+    os.system('clear')
+
+print(data)
+
+if os.name == 'nt':
+    os.system('pause')
+else:
+    os.system("""
+bash -c "read -n 1 -s -r -p 'Press any key to continue . . . \n'"
+""")
+sys.exit()
