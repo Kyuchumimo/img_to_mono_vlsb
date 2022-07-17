@@ -9,14 +9,12 @@ import os, sys
 im = Image.open(sys.argv[1])  # Can be many different formats.
 im = im.crop((0,0,min(im.size[0], 84), min(im.size[1], 48))).convert("1").convert("RGB")
 
-print(im.size)  # Get the width and hight of the image for iterating over
-
 data = bytearray((im.size[0]*(((im.size[1]-1)//8+1)*8))//8)
 for i in range((im.size[1]-1)//8+1):
     for j in range(im.size[0]):
         for k in range(7, -1, -1):
             try:
-                if im.getpixel([j,k+(8*i)]) == (0, 0, 0):
+                if im.getpixel((j,k+(8*i))) == (0, 0, 0):
                     data[j+(i*im.size[0])] |= 1 << k
             except IndexError:
                 pass
