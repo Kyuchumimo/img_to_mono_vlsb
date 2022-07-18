@@ -7,7 +7,8 @@ from PIL import Image
 import os, sys
 
 im = Image.open(sys.argv[1])  # Can be many different formats.
-im = im.crop((0,0,min(im.size[0], 84), min(im.size[1], 48))).convert("1").convert("RGB")
+im.thumbnail((84, 48))
+im = im.convert("1").convert("RGB")
 
 data = bytearray((im.size[0]*(((im.size[1]-1)//8+1)*8))//8)
 for i in range((im.size[1]-1)//8+1):
